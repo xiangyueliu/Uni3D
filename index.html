@@ -336,6 +336,7 @@
 	<hr>
     <br>
 
+<!-- 	    
 <!--     <h3>Dog(Shiba)-Haru (11 videos) <a href='./shiba.html'> >> [Click for more]</a></h3> -->
     <h3>Human-cap (9s)</h3>
     <br>
@@ -382,168 +383,9 @@
       </p>
       </div>
     </div>
-    </div>
-    
-<!--     <div id="aba" class="content">
-      <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
-      </div>
-      <h2>Ablations</h2>
-      <h3>Sensitivity to inaccurate initial poses  <a href='./aba.html'> >> [Click for more ablations] </a></h3>
-	<br>
-	<center>
-		<table align=center width=810px>
-			<tr>
-				<td width=250px>
-			 <div>
-                         <video playsinline controls autoplay muted width="100%">
-                          <source  src="./vids/exps/pose/pose-20.mp4" type="video/mp4">
-                         </video>
-   			 <center> 20° pose error</center>
-			 </div>
-				</td>
-				<td width=250px>
-			 <div>
-                         <video playsinline controls autoplay muted width="100%">
-                          <source  src="./vids/exps/pose/pose-50.mp4" type="video/mp4">
-                         </video>
-   			 <center> 50° pose error</center>
-			 </div>
-				</td>
-				<td width=250px>
-			 <div>
-                         <video playsinline controls autoplay muted width="100%">
-                          <source  src="./vids/exps/pose/pose-90.mp4" type="video/mp4">
-                         </video>
-   			 <center> 90° pose error</center>
-			 </div>
-				</td>
-			</tr>
-		</table>
-		<table align=center width=810px>
-			<tr>
-				<td>
-				We inject different levels
-                of Gaussian noise into the initial root poses, leading to average 
-                rotation errors of {20, 50, 90}°. BANMo recovers a reasonable shape
-                and refines the root pose even at 90° rotation error.
-				</td>
-			</tr>
-		</table>
-	</center>
     </div> -->
-    
-<!--     <div id="more" class="content">
-      <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
-      </div>
-      <h2>Novel view synthesis </h2>
-	<br>
-	<center>
-		<table align=center width=810px>
-			<tr>
-				<td width=250px>
-			 <div>
-                         <video playsinline controls autoplay muted width="100%">
-                          <source  src="./vids/nvs.mp4" type="video/mp4">
-                         </video>
-			 </div>
-				</td>
-			</tr>
-		</table>
-		<table align=center width=810px>
-			<tr>
-				<td>
-				We render the body motion of cat-pikachiu-05 (left) from a the camera trajectory 
-                of cat-pikachiu-00.
-				</td>
-			</tr>
-		</table>
-	</center>
-    </div> -->
-    
-<!--     <div class="content">
-      <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
-      </div>
-      <h2>Motion retargeting </h2>
-	<br>
-	<center>
-		<table align=center width=810px>
-			<tr>
-				<td width=250px>
-			 <div>
-                         <video playsinline controls autoplay muted width="100%">
-                          <source  src="./vids/pikachiu-haru.mp4" type="video/mp4">
-                         </video>
-			 </div>
-				</td>
-			</tr>
-		</table>
-		<table align=center width=810px>
-			<tr>
-				<td>
-				After optimizing the model over source videos (haru the shiba inu), 
-                we can re-target to a driving video (pikachiu the cat).
-				</td>
-			</tr>
-		</table>
-	</center>
-    </div> -->
-    
-<!--     <div class="content">
-      <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
-      </div>
-      <h2>Adaptation to a new video </h2>
-	<br>
-	<center>
-		<table align=center width=810px>
-			<tr>
-				<td width=250px>
-			 <div>
-                         <video playsinline controls autoplay muted width="100%">
-                          <source  src="./vids/cat-socks-{0}-all.mp4" type="video/mp4">
-                         </video>
-			 </div>
-				</td>
-			</tr>
-		</table>
-		<table align=center width=810px>
-			<tr>
-				<td>
-				After optimizing the model over videos of cat-coco, 
-                we adapt it to a single video of cat-socks by fine-tuning.
-				</td>
-			</tr>
-		</table>
-	</center>
-    </div> -->
-    
-<!--     <div class="content">
-      <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
-      </div>
-      <h2>Visualization of body pose code </h2>
-	<br>
-	<center>
-		<table align=center width=810px>
-			<tr>
-				<td width=250px>
-			 <div>
-                         <video playsinline controls autoplay muted width="100%">
-                          <source  src="./vids/pose-code.mp4" type="video/mp4">
-                         </video>
-			 </div>
-				</td>
-			</tr>
-		</table>
-		<table align=center width=810px>
-			<tr>
-				<td>
-				After optimizing the model over videos (left), we project the 128-dimensional
-                body pose code that controls the canonical space body motion (center) 
-                into 2D with PCA and visualize them as colored dots (right).
-				</td>
-			</tr>
-		</table>
-	</center>
-    </div> -->
+
+
    
 <!--     <div id="bib" class="content">
             <h2>Bibtex</h2>
@@ -575,7 +417,6 @@
         <a href="https://shubham-goel.github.io/ucmr/">Shape and Viewpoints without Keypoints. ECCV. 2020.</a> <br>
         <a href="https://nileshkulkarni.github.io/acsm/">Articulation Aware Canonical Surface Mapping. CVPR 2020.</a> <br>
         <a href="https://akanazawa.github.io/cmr/">Learning Category-Specific Mesh Reconstruction from Image Collections. ECCV 2018.</a> <br>
-
 	    </p>
     </div> -->
 
