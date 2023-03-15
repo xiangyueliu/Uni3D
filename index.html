@@ -1,0 +1,739 @@
+
+<!-- saved from url=(0047)https://www.cs.cmu.edu/~peiyunh/tiny/index.html -->
+<!-- Import the component -->
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<script type="module">
+  panViewer('#cat-pikachiu');
+  panViewer('#shiba-haru');
+  function panViewer(modelid) {
+    const modelViewer = document.querySelector(modelid);
+    modelViewer.addEventListener('load', () => {
+        for (const material of modelViewer.model.materials) {
+          // Removes occlusion map from all materials.
+          material.occlusionTexture.setTexture(null);
+        }
+      });
+    //const tapDistance = 2;
+    //let panning = false;
+    //let panX, panY;
+    //let startX, startY;
+    //let lastX, lastY;
+    //let metersPerPixel;
+
+    //const startPan = () => {
+    //  const orbit = modelViewer.getCameraOrbit();
+    //  const {theta, phi, radius} = orbit;
+    //  const psi = theta - modelViewer.turntableRotation;
+    //  metersPerPixel = 0.75 * radius / modelViewer.getBoundingClientRect().height;
+    //  panX = [-Math.cos(psi), 0, Math.sin(psi)];
+    //  panY = [
+    //    -Math.cos(phi) * Math.sin(psi),
+    //    Math.sin(phi),
+    //    -Math.cos(phi) * Math.cos(psi)
+    //  ];
+    //  modelViewer.interactionPrompt = 'none';
+    //};
+
+    //const movePan = (thisX, thisY) => {
+    //  const dx = (thisX - lastX) * metersPerPixel;
+    //  const dy = (thisY - lastY) * metersPerPixel;
+    //  lastX = thisX;
+    //  lastY = thisY;
+
+    //  const target = modelViewer.getCameraTarget();
+    //  target.x += dx * panX[0] + dy * panY[0];
+    //  target.y += dx * panX[1] + dy * panY[1];
+    //  target.z += dx * panX[2] + dy * panY[2];
+    //  modelViewer.cameraTarget = `${target.x}m ${target.y}m ${target.z}m`;
+
+    //  // This pauses turntable rotation
+    //  modelViewer.dispatchEvent(new CustomEvent(
+    //        'camera-change', {detail: {source: 'user-interaction'}}));
+    //};
+
+    //const recenter = (pointer) => {
+    //  panning = false;
+    //  if (Math.abs(pointer.clientX - startX) > tapDistance ||
+    //      Math.abs(pointer.clientY - startY) > tapDistance)
+    //    return;
+    //  const hit = modelViewer.positionAndNormalFromPoint(pointer.clientX, pointer.clientY);
+    //  modelViewer.cameraTarget =
+    //      hit == null ? 'auto auto auto' : hit.position.toString();
+    //};
+
+    //modelViewer.addEventListener('mousedown', (event) => {
+    //  startX = event.clientX;
+    //  startY = event.clientY;
+    //  panning = event.button === 2 || event.ctrlKey || event.metaKey ||
+    //      event.shiftKey;
+    //  if (!panning)
+    //    return;
+
+    //  lastX = startX;
+    //  lastY = startY;
+    //  startPan();
+    //  event.stopPropagation();
+    //}, true);
+
+    //modelViewer.addEventListener('touchstart', (event) => {
+    //  const {targetTouches, touches} = event;
+    //  startX = targetTouches[0].clientX;
+    //  startY = targetTouches[0].clientY;
+    //  panning = targetTouches.length === 2 && targetTouches.length === touches.length;
+    //  if (!panning)
+    //    return;
+
+    //  lastX = 0.5 * (targetTouches[0].clientX + targetTouches[1].clientX);
+    //  lastY = 0.5 * (targetTouches[0].clientY + targetTouches[1].clientY);
+    //  startPan();
+    //}, true);
+
+    //self.addEventListener('mousemove', (event) => {
+    //  if (!panning)
+    //    return;
+
+    //  movePan(event.clientX, event.clientY);
+    //  event.stopPropagation();
+    //}, true);
+
+    //modelViewer.addEventListener('touchmove', (event) => {
+    //  if (!panning || event.targetTouches.length !== 2)
+    //    return;
+
+    //  const {targetTouches} = event;
+    //  const thisX = 0.5 * (targetTouches[0].clientX + targetTouches[1].clientX);
+    //  const thisY = 0.5 * (targetTouches[0].clientY + targetTouches[1].clientY);
+    //  movePan(thisX, thisY);
+    //}, true);
+
+    //self.addEventListener('mouseup', (event) => {
+    //  recenter(event);
+    //}, true);
+    //
+    //modelViewer.addEventListener('touchend', (event) => {
+    //  if (event.targetTouches.length === 0) {
+    //    recenter(event.changedTouches[0]);
+
+    //    if (event.cancelable) {
+    //      event.preventDefault();
+    //    }
+    //  }
+    //}, true);
+    
+    // change color
+    const subid = '#color-controls-' + modelid.split("#")[1];
+    console.log('Changing color to: ', subid);
+    document.querySelector(subid).addEventListener('click', (event) => {
+      const colorString = event.target.dataset.color;
+      if (!colorString) {
+        return;
+      }
+      const modelSrc = modelViewer.getAttribute('src');
+      //debugger;
+      if (colorString == "0") {
+          const submodelSrc = modelSrc.split(".glb")[0];
+          modelViewer.setAttribute('src', submodelSrc + '-gray.glb');
+          event.target.dataset.color = "1";
+      } else if (colorString == "1") {
+          const submodelSrc = modelSrc.split("-gray.glb")[0];
+          modelViewer.setAttribute('src', submodelSrc + '.glb');
+          event.target.dataset.color = "0";
+      }
+    });
+  }
+</script>
+
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="robots" content="noindex">
+    <link rel="StyleSheet" href="./files/style.css" type="text/css" media="all">
+
+    <title>BANMo: Building Animatable 3D Neural Models from Many Casual Videos
+      </title>
+
+    <style type="text/css">
+      body {
+	    font-family : Times;
+	    background-color : #f2f2f2;
+	    font-size : 15px;
+      }
+
+      .content {
+	    width : 800px;
+	    padding : 25px 25px;
+	    margin : 25px auto;
+	    background-color : #fff;
+	    border-radius: 20px;
+      }
+      .description {
+        font-family: "Times";
+        white-space: pre;
+        text-align: left;
+      }
+
+      .content-title {
+	    background-color : inherit;
+	    margin-bottom : 0;
+	    padding-bottom : 0;
+      }
+
+      a, a:visited {
+	    text-decoration: none;
+	    color : blue;
+      }
+
+      .anchor {
+      color: inherit;
+      }
+      #authors {
+	    text-align : center;
+      }
+
+      #conference {
+	    text-align : center;
+	    font-style : italic;
+      }
+
+      #authors a {
+	    margin : 0 10px;
+      }
+
+      h1 {
+	    text-align : center;
+	    font-family : Times;
+	    font-size : 35px;
+      }
+
+      h2 {
+	    font-family : Times;
+	    font-size : 25px;
+	    padding : 0; margin : 10px;
+      }
+
+      h3 {
+	    font-family : Times;
+	    font-size : 20px;
+	    padding : 0; margin : 10px;
+      }
+
+      p {
+	    font-family : Times;
+	    line-height : 130%;
+	    margin : 10px;
+      }
+
+      big {
+	    font-family : Times;
+	    font-size : 20px;
+      }
+
+      li {
+	    margin : 10px 0;
+      }
+
+      .samples {
+	    float : left;
+	    width : 50%;
+	    text-align : center;
+      }
+
+      .cond {
+	    float : left;
+	    margin : 0 40px;
+      }
+
+      .cond-container {
+	    width : 700px;
+	    margin : 0 auto;
+	    text-align : center;
+      }
+     #vidalign {
+         display: block;
+         margin: 0px;
+         padding: 0px;
+         position: relative;
+         top: 90px;
+         height: auto;
+         max-width: auto;
+         overflow-y: hidden;
+         overflow-x:auto;
+         word-wrap:normal;
+         white-space:nowrap;
+     }
+
+    /* Add a black background color to the top navigation */
+    .topnav {
+      background-color: rgba(0,0,0,0.2);
+      z-index:1; 
+      overflow: hidden;
+      position: fixed;
+      top: 0; /* Position the navbar at the top of the page */
+      width: 100%; /* Full width */
+    }
+    
+    /* Style the links inside the navigation bar */
+    .topnav a {
+      float: left;
+      color: #333;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+    
+    /* Change the color of links on hover */
+    .topnav a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+    
+    /* Add a color to the active/current link */
+    .topnav a.active {
+      background-color: #04AA6D;
+      color: white;
+    }
+
+    </style>
+
+    <style>
+    model-viewer {
+      width: 300px;
+      height: 300px;
+    }
+    </style>
+
+  </head>
+
+    <div class="topnav">
+      <a class="active" href="#top">Top</a>
+      <a href="#abs">Paper/Code</a>
+      <a href="#vid">Video</a>
+      <a href="#results">Results</a>
+      <a href="#aba">Ablations</a>
+      <a href="#bib">Bibtex</a>
+    </div>
+
+    <div id="top" class="content content-title" style="text-align: center;">
+	    <h1>BANMo: Building Animatable 3D Neural Models from Many Casual Videos
+        </h1>
+	<big style="color:grey;"> CVPR 2022 - Oral Presentation
+        </big>    
+	<p id="authors">
+      <table align="center" style="width:100%; text-align:center; table-layout: fixed">
+        <tr>
+	      <th><a href="https://gengshan-y.github.io/">Gengshan Yang<sup>2</sup></a></th>
+	      <th><a href="https://minhpvo.github.io/">Minh Vo<sup>3</sup></a></th>
+	      <th><a href="https://nneverova.github.io/">Natalia Neverova<sup>1</sup></a></th>
+        </tr>
+      </table>
+      <table align="center" style="width:100%; text-align:center; table-layout: fixed">
+        <tr>
+	      <th><a href="http://www.cs.cmu.edu/~deva/">Deva Ramanan<sup>2</sup></a></th>
+	      <th><a href="https://www.robots.ox.ac.uk/~vedaldi/">Andrea Vedaldi<sup>1</sup></a></th>
+	      <th><a href="https://jhugestar.github.io/">Hanbyul Joo<sup>1</sup></a></th>
+        </tr>
+      </table>
+      <table align="center" style="width:100%; text-align:center; table-layout: fixed">
+        <th><sup>1</sup>Meta AI</th>
+        <th><sup>2</sup>Carnegie Mellon University</th>
+        <th><sup>3</sup>Meta Reality Labs</th>
+      </table>
+	    </p>
+	    <p>
+	    </p>
+    </div>
+
+
+
+    <div class="content">
+      <figure style="font-family: Times; font-weight: normal; margin: 0px; padding: 0px; border: 0px; text-align: left">
+ <!--        <video playsinline controls autoplay loop muted width="810" height="320">
+                       <source  src="./vids/teaser.jpg" type="video/mp4"> 
+         </video>-->
+         <p style="text-align:center;">
+         <img src="./vids/teaser.jpg" width="750">
+         </p>
+         <br>
+	      <figcaption> Given multiple casual videos capturing a deformable object, 
+              BANMo reconstructs an animatable 3D model, including an implicit canonical 3D shape, appearance, 
+              skinning weights, and time-varying articulations, without pre-defined shape templates or registered cameras.
+              <b>Left</b>: Input videos; <b>Middle</b>: 3D shape, bones, and skinning weights (visualized as surface colors) in the canonical space; 
+              <b>Right</b>: Posed reconstruction at each time instance with color and canonical embeddings (correspondences are shown as the same colors).
+      </figure>
+      <br>
+      <figure style="font-family: Times; font-weight: normal; margin: 0px; padding: 0px; border: 0px; text-align: left">
+         <p style="text-align:center;">
+         <img src="./vids/teaser-small.gif" width="750">
+         <p>
+	      <figcaption> 
+              <b>Left</b>: Input videos; 
+              <b>Right</b>: Reconstruction at each time instance. Correspondences are shown as the same colors.
+    </div>
+    
+    <div id="abs" class="content">
+      <h2>Abstract</h2>
+      <p>
+      Prior work for articulated 3D shape reconstruction often relies on specialized sensors (e.g., synchronized multi-camera systems), 
+      or pre-built 3D deformable models (e.g., SMAL or SMPL). 
+      Such methods are not able to scale to diverse sets of objects in the wild. 
+      We present BANMo, a method that requires neither a specialized sensor nor a pre-defined template shape. 
+      BANMo builds high-fidelity, articulated 3D <i>models</i> (including shape and animatable skinning weights) 
+      from many monocular casual videos in a differentiable rendering framework. 
+      While the use of many videos provides more coverage of camera views and object articulations, 
+      they introduce significant challenges in establishing correspondence across scenes with different backgrounds, 
+      illumination conditions, etc. Our key insight is to merge three schools of thought; 
+      (1) classic deformable shape models that make use of articulated bones and blend skinning, 
+      (2) volumetric neural radiance fields (NeRFs) that are amenable to gradient-based optimization, and 
+      (3) canonical embeddings that generate correspondences between pixels and an articulated model. 
+      We introduce neural blend skinning models that allow for differentiable and invertible articulated deformations.
+      When combined with canonical embeddings, such models allow us to establish dense correspondences across videos 
+      that can be self-supervised with cycle consistency. On real and synthetic datasets, 
+      BANMo shows higher-fidelity 3D reconstructions than prior works for humans and animals, 
+      with the ability to render realistic images from novel viewpoints and poses. 
+	    </p>
+      <div id="teaser" style="margin: 12px; text-align: left;border-top: 1px solid lightgray;padding-top: 12px;">
+          <a href="https://github.com/facebookresearch/banmo">
+	        <strong>[Code]</strong>
+          </a>
+          <a href="./banmo-cvpr.pdf">
+	        <strong>[Paper]</strong>
+          </a>
+          <a href="https://www.dropbox.com/s/tn7vc7p2oyp7eeq/banmo-share-compressed.pdf?dl=0">
+	        <strong>[Slides (6M)]</strong>
+          </a>
+          <a href="https://www.dropbox.com/s/33ay9raezo7ef6y/banmo-share.key?dl=0">
+	        <strong>[Slides (240M)]</strong>
+          </a>
+          <a href="./banmo-poster.pdf">
+	        <strong>[Poster]</strong>
+          </a>
+          <!--
+          <a href="https://arxiv.org/abs/2112.12761">
+	        <strong>[Arxiv]</strong>
+	      </a> 
+          -->
+	      
+      </div>
+    </div>
+   
+    <div id="vid" class="content">
+      <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
+      </div>
+      <h2>Video
+      </h2>
+         <!--<video controls width="810" height="520">
+          <source  src="./vids/video.mp4" type="video/mp4">
+         </video>-->
+         <iframe width="810" height="520" src="https://www.youtube.com/embed/1NUa-yvFGA0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div id="teaser" style="margin: 12px; text-align: left;border-top: 1px solid lightgray;padding-top: 12px;">
+          <a href='./banmo-video-cvpr.mp4'> 
+              <strong>[Download] </strong>
+          </a>
+      </div>
+    </div>
+   
+    <div id="results" class="content">
+      <h2>Results</h2>
+
+    <h3>Casual-cat (11 videos) <a href='./cats.html'> >> [Click for more]</a></h3>
+	<br>
+	<center>
+		<table align=center width=810px>
+			<tr>
+				<td width=810px>
+                         <video playsinline controls autoplay muted loop width="100%">
+                          <source  src="./vids/cat-pikachiu-{0}-all.mp4" type="video/mp4">
+                         </video>
+				</td>
+			</tr>
+		</table>
+		<table align=center width=810px>
+			<tr>
+				<td>
+				 Casual-cat-0. Top left: reference image overlayed with input densepose features. Top middle: reconstructed  1st frame shape. Top right: recovered articulations in the canoincal space. Bottom row: reconstruction from front/side/top viewpoints. Correspondences are shown as the same color.
+				</td>
+			</tr>
+		</table>
+	</center>
+    <div>
+        <h3>Articulated shape:</h3>
+	<center>
+    <div class="mesh">
+    <model-viewer autoplay ar shadow-intensity="1"  id="cat-pikachiu" src="./meshes/cat-pikachiu.glb" alt="Articulated shape" ar ar-modes="webxr scene-viewer quick-look" environment-image="neutral" auto-rotate camera-controls>
+       <div class="controls" ,="" id="color-controls-cat-pikachiu">
+        <button data-color="0">Color on/off</button>
+       </div>
+    </model-viewer>
+    </div>
+	</center>
+    </div>
+	<hr>
+    <br>
+
+    <h3>Dog(Shiba)-Haru (11 videos) <a href='./shiba.html'> >> [Click for more]</a></h3>
+    <a href="https://www.youtube.com/channel/UCYd6CmhFvvq6yruUBmGXjuA"> [youtube] </a>
+    <br>
+	<center>
+		<table align=center width=810px>
+			<tr>
+				<td width=810px>
+                         <video playsinline controls autoplay muted loop width="100%">
+                             <source  src="./vids/shiba-haru-1-{5}-all.mp4" type="video/mp4">
+                         </video>
+				</td>
+			</tr>
+		</table>
+		<table align=center width=810px>
+			<tr>
+				<td>
+				 Dog(Shiba)-Haru-5. Top left: reference image overlayed with input densepose features. Top middle: reconstructed  1st frame shape. Top right: recovered articulations in the canoincal space. Bottom row: reconstruction from front/side/top viewpoints. Correspondences are shown as the same color.
+				</td>
+		</table>
+	</center>
+    <div>
+        <h3>Articulated shape:</h3>
+	<center>
+    <div class="mesh">
+    <model-viewer autoplay ar shadow-intensity="1"  id="shiba-haru" src="./meshes/shiba-haru.glb" alt="Articulated shape" ar ar-modes="webxr scene-viewer quick-look" environment-image="neutral" auto-rotate camera-controls>
+       <div class="controls" ,="" id="color-controls-shiba-haru">
+        <button data-color="0">Color on/off</button>
+       </div>
+    </model-viewer>
+    </div>
+	</center>
+      <div id="teaser" style="margin: 12px; text-align: left;border-top: 1px solid lightgray;padding-top: 12px;">
+      <h3>More results</h3>
+      <p>
+          <a href='./results.html#cmp'> <strong> [Comparison] </strong></a>
+          <a href='./results.html#psn1'> <strong> [Human-cap] </strong></a>
+          <a href='./results.html#cat2'> <strong> [Cat-Coco] </strong></a>
+          <a href='./results.html#pgn'> <strong> [Penguins] </strong></a>
+          <a href='./results.html#dog2'> <strong> [Dog-Tetres] </strong></a>
+          <a href='./results.html#rbt'> <strong> [Robot-Laikago] </strong></a>
+          <a href='./results.html#psn2'> <strong> [Dancer-AMA] </strong></a>
+          <a href='./results.html#egl'> <strong> [Eagle] </strong></a>
+          <a href='./results.html#hnd'> <strong> [Hands] </strong></a>
+      </p>
+      </div>
+    </div>
+    
+    </div>
+    
+    <div id="aba" class="content">
+      <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
+      </div>
+      <h2>Ablations</h2>
+      <h3>Sensitivity to inaccurate initial poses  <a href='./aba.html'> >> [Click for more ablations] </a></h3>
+	<br>
+	<center>
+		<table align=center width=810px>
+			<tr>
+				<td width=250px>
+			 <div>
+                         <video playsinline controls autoplay muted width="100%">
+                          <source  src="./vids/exps/pose/pose-20.mp4" type="video/mp4">
+                         </video>
+   			 <center> 20° pose error</center>
+			 </div>
+				</td>
+				<td width=250px>
+			 <div>
+                         <video playsinline controls autoplay muted width="100%">
+                          <source  src="./vids/exps/pose/pose-50.mp4" type="video/mp4">
+                         </video>
+   			 <center> 50° pose error</center>
+			 </div>
+				</td>
+				<td width=250px>
+			 <div>
+                         <video playsinline controls autoplay muted width="100%">
+                          <source  src="./vids/exps/pose/pose-90.mp4" type="video/mp4">
+                         </video>
+   			 <center> 90° pose error</center>
+			 </div>
+				</td>
+			</tr>
+		</table>
+		<table align=center width=810px>
+			<tr>
+				<td>
+				We inject different levels
+                of Gaussian noise into the initial root poses, leading to average 
+                rotation errors of {20, 50, 90}°. BANMo recovers a reasonable shape
+                and refines the root pose even at 90° rotation error.
+				</td>
+			</tr>
+		</table>
+	</center>
+    </div>
+    
+    <div id="more" class="content">
+      <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
+      </div>
+      <h2>Novel view synthesis </h2>
+	<br>
+	<center>
+		<table align=center width=810px>
+			<tr>
+				<td width=250px>
+			 <div>
+                         <video playsinline controls autoplay muted width="100%">
+                          <source  src="./vids/nvs.mp4" type="video/mp4">
+                         </video>
+			 </div>
+				</td>
+			</tr>
+		</table>
+		<table align=center width=810px>
+			<tr>
+				<td>
+				We render the body motion of cat-pikachiu-05 (left) from a the camera trajectory 
+                of cat-pikachiu-00.
+				</td>
+			</tr>
+		</table>
+	</center>
+    </div>
+    
+    <div class="content">
+      <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
+      </div>
+      <h2>Motion retargeting </h2>
+	<br>
+	<center>
+		<table align=center width=810px>
+			<tr>
+				<td width=250px>
+			 <div>
+                         <video playsinline controls autoplay muted width="100%">
+                          <source  src="./vids/pikachiu-haru.mp4" type="video/mp4">
+                         </video>
+			 </div>
+				</td>
+			</tr>
+		</table>
+		<table align=center width=810px>
+			<tr>
+				<td>
+				After optimizing the model over source videos (haru the shiba inu), 
+                we can re-target to a driving video (pikachiu the cat).
+				</td>
+			</tr>
+		</table>
+	</center>
+    </div>
+    
+    <div class="content">
+      <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
+      </div>
+      <h2>Adaptation to a new video </h2>
+	<br>
+	<center>
+		<table align=center width=810px>
+			<tr>
+				<td width=250px>
+			 <div>
+                         <video playsinline controls autoplay muted width="100%">
+                          <source  src="./vids/cat-socks-{0}-all.mp4" type="video/mp4">
+                         </video>
+			 </div>
+				</td>
+			</tr>
+		</table>
+		<table align=center width=810px>
+			<tr>
+				<td>
+				After optimizing the model over videos of cat-coco, 
+                we adapt it to a single video of cat-socks by fine-tuning.
+				</td>
+			</tr>
+		</table>
+	</center>
+    </div>
+    
+    <div class="content">
+      <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
+      </div>
+      <h2>Visualization of body pose code </h2>
+	<br>
+	<center>
+		<table align=center width=810px>
+			<tr>
+				<td width=250px>
+			 <div>
+                         <video playsinline controls autoplay muted width="100%">
+                          <source  src="./vids/pose-code.mp4" type="video/mp4">
+                         </video>
+			 </div>
+				</td>
+			</tr>
+		</table>
+		<table align=center width=810px>
+			<tr>
+				<td>
+				After optimizing the model over videos (left), we project the 128-dimensional
+                body pose code that controls the canonical space body motion (center) 
+                into 2D with PCA and visualize them as colored dots (right).
+				</td>
+			</tr>
+		</table>
+	</center>
+    </div>
+   
+    <div id="bib" class="content">
+            <h2>Bibtex</h2>
+            <p class="description">@inproceedings{yang2022banmo,
+  title={BANMo: Building Animatable 3D Neural Models from Many Casual Videos},
+  author={Yang, Gengshan 
+      and Vo, Minh
+      and Neverova, Natalia
+      and Ramanan, Deva
+      and Vedaldi, Andrea
+      and Joo, Hanbyul},
+  booktitle = {CVPR},
+  year={2022}
+}  </p>
+    </div>
+    
+
+
+    <div class="content">
+            <h2>Related projects</h2>
+	    <p>
+        Deformable shape reconstruction from video(s):<br>
+	    <a href="https://viser-shape.github.io/"> ViSER: Video-Specific Surface Embeddings for Articulated 3D Shape Reconstruction. NeurIPS 2021.</a> <br>
+	    <a href="https://lasr-google.github.io/"> LASR: Learning Articulated Shape Reconstruction from a Monocular Video. CVPR 2021.</a> <br>
+	    <a href="https://dove3d.github.io/"> DOVE: Learning Deformable 3D Objects by Watching Videos. arXiv preprint.</a> <br>
+        Deformable shape reconstruction from images:<br>
+        <a href="https://fkokkinos.github.io/to_the_point/"> To The Point: Correspondence-driven monocular 3D category reconstruction. NeurIPS 2021.</a> <br>
+        <a href="https://sites.google.com/nvidia.com/unsup-mesh-2020/">Self-supervised Single-view 3D Reconstruction via Semantic Consistency. ECCV 2020.</a> <br>
+        <a href="https://shubham-goel.github.io/ucmr/">Shape and Viewpoints without Keypoints. ECCV. 2020.</a> <br>
+        <a href="https://nileshkulkarni.github.io/acsm/">Articulation Aware Canonical Surface Mapping. CVPR 2020.</a> <br>
+        <a href="https://akanazawa.github.io/cmr/">Learning Category-Specific Mesh Reconstruction from Image Collections. ECCV 2018.</a> <br>
+
+	    </p>
+    </div>
+
+    <div class="content">
+            <h2>Acknowledgments</h2>
+            <p>Work is done during Meta AI internship. 
+            Gengshan Yang is supported by the Qualcomm Innovation Fellowship. 
+            Thanks to Shubham Tulsiani, Jason Zhang, and Ignacio Rocco for helpful feedback and discussions, 
+            and Vasil Khalidov for help settting up DensePose-CSE color visualization.
+            Thanks pet friends pikachiu, tetres, 
+            <a href="https://www.youtube.com/c/HarutheShibaInu/about">haru </a>,
+            <a href="https://www.instagram.com/cocososoxdxd/">coco and socks </a> 
+            for serving as our models.
+            </p>
+    </div>
+
+
+<table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+<tr><td>
+    <p align="right"><font size="2">
+        <a href="https://www.cs.cmu.edu/~peiyunh/">Webpage design borrowed from Peiyun Hu</a> </font>
+    </p>
+</td></tr>
+</table>
+
+</body></html> 
